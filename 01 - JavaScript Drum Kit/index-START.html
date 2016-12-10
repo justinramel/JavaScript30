@@ -59,9 +59,14 @@
 
 <script>
   document.body.onkeydown = function(e){
-    var key = document.querySelector(`.key[data-key="${e.which}"]`)
     var audio = document.querySelector(`audio[data-key="${e.which}"]`)
+    if (!audio) {
+      return
+    }
+    audio.currentTime = 0
     audio.play()
+
+    var key = document.querySelector(`.key[data-key="${e.which}"]`)
     key.classList.add('playing')
     setTimeout(() => key.classList.remove('playing'), 60)
   }

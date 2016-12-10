@@ -61,12 +61,40 @@
       background:black;
       position: absolute;
       top:50%;
+      transform: rotate(90deg);
+      transform-origin: 100%;
+      transition: all 0.06s;
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1)
     }
 
   </style>
 
   <script>
+  var hourHand = document.querySelector('.hour-hand')
+  var minHand = document.querySelector('.min-hand')
+  var secondHand = document.querySelector('.second-hand')
 
+  setInterval(() => {
+    var now = new Date()
+    var hour = now.getHours()
+    var min = now.getMinutes()
+    var second = now.getSeconds()
+
+    var hourAngle = ((60*hour)/2 + 90)
+    var minAngle = 6 * min + 90
+    var secondAngle = 6 * second + 90
+
+    console.log(hourAngle)
+    console.log(minAngle)
+    console.log(secondAngle)
+
+    hourHand.style.transform = `rotate(${hourAngle}deg)`
+    hourHand.style.background = 'red'
+    minHand.style.transform = `rotate(${minAngle}deg)`
+    minHand.style.background = 'green'
+    secondHand.style.transform = `rotate(${secondAngle}deg)`
+    console.log(now)
+  }, 1000)
 
   </script>
 </body>
