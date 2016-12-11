@@ -21,10 +21,21 @@
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
+    :root {
+      --base: #ffc600;
+      --spacing: 10px;
+      --blur: 10px;
+    }
 
-    /*
-      misc styles, nothing to do with CSS variables
-    */
+    img {
+      padding: var(--spacing);
+      background: var(--base);
+      filter: blur(var(--blur));
+    }
+
+    .hl {
+      color: var(--base)
+    }
 
     body {
       text-align: center;
@@ -53,6 +64,18 @@
   </style>
 
   <script>
+    var spacing = document.querySelector('input[name="spacing"]')
+    spacing.onchange = () => {
+      document.documentElement.style.setProperty('--spacing', `${spacing.value}px`);
+    }
+    var blur = document.querySelector('input[name="blur"]')
+    blur.onchange = () => {
+      document.documentElement.style.setProperty('--blur', `${blur.value}px`);
+    }
+    var base = document.querySelector('input[name="base"]')
+    base.onchange = () => {
+      document.documentElement.style.setProperty('--base', `${base.value}`);
+    }
   </script>
 
 </body>
