@@ -18,6 +18,45 @@
   <script>
     const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
     let cities = []
+    const input = document.querySelector('input')
+    const resultsList = document.querySelector('ul')
+
+    function onKeypress (e) {
+      const search = `${e.target.value}${e.key}`
+      const results = find(search, cities)
+      console.log('results', results)
+      const items = results.reduce((acc, item) => acc = `${acc}<li>${item.state} - ${item.city}</li>`, '')
+      resultsList.innerHTML = items
+    }
+
+    function find (word, cities) {
+      const regex = new RegExp(word, 'gi')
+      return cities.filter(place => place.state.match(regex) ||
+                                    place.city.match(regex))
+    }
+
+    function numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function updateList () {
+      const results = find(this.value, cities)
+      const regex = new RegExp(this.value, 'gi')
+      const items = results.reduce((acc, item) => {
+        const stateName = item.state.replace(regex, `<span class="hl">${this.value}</span>`)
+        const cityName = item.city.replace(regex, `<span class="hl">${this.value}</span>`)
+        acc = `${acc}<li>
+                      <span class"name">${stateName} - ${cityName}</span>
+                      <span class="population">${numberWithCommas(item.population)}</span>
+                     </li>`
+        return acc
+      }, '')
+      resultsList.innerHTML = items
+    }
+
+    input.addEventListener('change', updateList)
+    input.addEventListener('keyup', updateList)
+
     fetch(endpoint)
       .then(response => response.json())
       .then(json => cities = json)
