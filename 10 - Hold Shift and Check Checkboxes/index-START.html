@@ -104,6 +104,27 @@
   </div>
 
 <script>
+  const checkboxes = [...document.querySelectorAll('input')]
+  let index = 0
+  let lastIndex = null
+
+  checkboxes.forEach(cb => {
+    cb.addEventListener('click', handleClick)
+    cb.setAttribute('data-index', index)
+    index++
+  })
+
+  function handleClick(e) {
+    if (e.shiftKey && lastIndex >= 0) {
+      const currentIndex = Number(this.getAttribute('data-index'))
+      if (currentIndex > lastIndex) {
+        checkboxes.slice(lastIndex, currentIndex).forEach(cb => cb.checked = true)
+      } else {
+        checkboxes.slice(currentIndex, lastIndex).forEach(cb => cb.checked = true)
+      }
+    }
+    lastIndex = Number(this.getAttribute('data-index'))
+  }
 </script>
 </body>
 </html>
