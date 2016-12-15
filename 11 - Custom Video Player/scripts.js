@@ -5,6 +5,7 @@ const progressBar = player.querySelector('.progress__filled')
 const toggle = player.querySelector('.toggle')
 const skipButtons = player.querySelectorAll('[data-skip]')
 const ranges = player.querySelectorAll('.player__slider')
+const fullscreen = player.querySelector('.fullscreen')
 
 function togglePlay () {
   if (video.paused) {
@@ -33,9 +34,10 @@ function handleProgress () {
   progressBar.style.flexBasis = `${percent}%`
 }
 
+let mousedown = false
 function jump (e) {
-  const percent = e.offsetX / this.offsetWidth
-  video.currentTime = percent * video.duration
+  const jumpPercent = e.offsetX / video.offsetWidth
+  video.currentTime = jumpPercent * video.duration
 }
 
 function handleSpace (e) {
@@ -47,9 +49,18 @@ video.addEventListener('click', togglePlay)
 video.addEventListener('play', updatePlayButton)
 video.addEventListener('pause', updatePlayButton)
 video.addEventListener('timeupdate', handleProgress)
+
 toggle.addEventListener('click', togglePlay)
+window.addEventListener('keydown', handleSpace)
+
 skipButtons.forEach(btn => btn.addEventListener('click', skip))
+
 ranges.forEach(range => range.addEventListener('change', updateRange))
 ranges.forEach(range => range.addEventListener('mousemove', updateRange))
+
 progress.addEventListener('click', jump)
-window.addEventListener('keydown', handleSpace)
+progress.addEventListener('mousedown', () => mousedown = true)
+progress.addEventListener('mouseup', () => mousedown = false)
+progress.addEventListener('mousemove', (e) => mousedown && jump(e))
+
+fullscreen.addEventListener('click', () => video.webkitRequestFullScreen())
