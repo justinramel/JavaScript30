@@ -7,6 +7,32 @@
 </head>
 <body>
 <script>
+
+  const konamiCode = [
+    'ArrowUp',
+    'ArrowUp',
+    'ArrowDown',
+    'ArrowDown',
+    'ArrowLeft',
+    'ArrowRight',
+    'ArrowLeft',
+    'ArrowRight',
+    'b',
+    'a'
+  ]
+
+  let loggedKeys = []
+  window.addEventListener('keydown', handleKeypress)
+
+  function handleKeypress (e) {
+    if (loggedKeys.length === 10) loggedKeys.shift()
+    loggedKeys.push(e.key)
+    if (loggedKeys.toString() === konamiCode.toString()) {
+      console.info('KONAMI!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    }
+    console.log(loggedKeys)
+  }
+
 </script>
 </body>
 </html>
