@@ -47,9 +47,7 @@
   const clean = (text) => text.replace(/a |the |an /gi, '')
   const sortedBands = bands.sort((a,b) => clean(a) > clean(b) ? 1 : -1)
   const list = sortedBands.map(band => `<li>${band}</li>`).join('')
-
   document.querySelector('#bands').innerHTML = list
-
 </script>
 
 </body>
